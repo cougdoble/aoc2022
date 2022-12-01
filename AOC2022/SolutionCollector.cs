@@ -8,7 +8,6 @@ public static class SolutionCollector
 
         foreach (var day in days)
         {
-            //var type = Type.GetType($"AOC2022.Solutions.Year{year}.Day{day:D2}.Solution");
             var type = Type.GetType($"AOC2022.Solutions.Day{day:D2}.Solution");
             if (type == null) continue;
             if (Activator.CreateInstance(type) is SolutionBase solution) yield return solution;

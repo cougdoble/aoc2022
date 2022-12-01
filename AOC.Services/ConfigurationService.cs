@@ -5,7 +5,7 @@ namespace AOC.Services;
 
 public static class ConfigurationService
 {
-    private static Config Config = GetConfig();
+    private static readonly Config Config = GetConfig();
 
     public static string GetCookie()
     {
@@ -34,13 +34,13 @@ public static class ConfigurationService
         if (File.Exists(path))
         {
             config = JsonSerializer.Deserialize<Config>(File.ReadAllText(path), options);
-            config.setDefaults();
+            config.SetDefaults();
         }
         else
         {
             config = new Config();
-            config.setDefaults();
-            File.WriteAllText(path, JsonSerializer.Serialize<Config>(config, options));
+            config.SetDefaults();
+            File.WriteAllText(path, JsonSerializer.Serialize(config, options));
         }
 
         return config;

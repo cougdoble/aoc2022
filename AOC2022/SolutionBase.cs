@@ -14,15 +14,15 @@ public abstract class SolutionBase
         Debug = useDebugInput;
     }
 
-    public int Day { get; }
-    public int Year { get; }
-    public string Title { get; }
-    public bool Debug { get; set; }
-    public string Input => LoadInput(Debug);
-    public string DebugInput => LoadInput(true);
+    private int Day { get; }
+    private int Year { get; }
+    private string Title { get; }
+    private bool Debug { get; }
+    protected string Input => LoadInput(Debug);
+    private string DebugInput => LoadInput(true);
 
-    public SolutionResult Part1 => Solve();
-    public SolutionResult Part2 => Solve(2);
+    private SolutionResult Part1 => Solve();
+    private SolutionResult Part2 => Solve(2);
 
     public IEnumerable<SolutionResult> SolveAll()
     {
@@ -30,7 +30,7 @@ public abstract class SolutionBase
         yield return Solve(SolvePartTwo);
     }
 
-    public SolutionResult Solve(int part = 1)
+    private SolutionResult Solve(int part = 1)
     {
         if (part == 1) return Solve(SolvePartOne);
         if (part == 2) return Solve(SolvePartTwo);
@@ -38,7 +38,7 @@ public abstract class SolutionBase
         throw new InvalidOperationException("Invalid part param supplied.");
     }
 
-    private SolutionResult Solve(Func<string> SolverFunction)
+    private SolutionResult Solve(Func<string> solverFunction)
     {
         if (Debug)
         {
@@ -52,7 +52,7 @@ public abstract class SolutionBase
         try
         {
             var then = DateTime.Now;
-            var result = SolverFunction();
+            var result = solverFunction();
             var now = DateTime.Now;
             return string.IsNullOrEmpty(result)
                 ? SolutionResult.Empty
@@ -60,13 +60,9 @@ public abstract class SolutionBase
         }
         catch (Exception)
         {
-            if (Debugger.IsAttached)
-            {
-                Debugger.Break();
-                return SolutionResult.Empty;
-            }
-
-            throw;
+            if (!Debugger.IsAttached) throw;
+            Debugger.Break();
+            return SolutionResult.Empty;
         }
     }
 
@@ -76,9 +72,7 @@ public abstract class SolutionBase
             $"./Solutions/Day{Day:D2}/{(debug ? "debug.txt" : "input.txt")}";
 
         if (File.Exists(inputFilepath) && new FileInfo(inputFilepath).Length > 0)
-        {
             return File.ReadAllText(inputFilepath);
-        }
         Console.WriteLine("file not found");
 
         if (debug) return "";
@@ -114,10 +108,10 @@ public abstract class SolutionBase
         }
         catch (InvalidOperationException)
         {
-            var colour = Console.ForegroundColor;
+            var color = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($"Day {Day}: Cannot fetch puzzle input before given date (Eastern Standard Time).");
-            Console.ForegroundColor = colour;
+            Console.ForegroundColor = color;
         }
 
         return "";
@@ -143,8 +137,8 @@ public abstract class SolutionBase
 
 public struct SolutionResult
 {
-    public string Answer { get; set; }
-    public TimeSpan Time { get; set; }
+    public string Answer { get; init; }
+    public TimeSpan Time { get; init; }
 
     public static SolutionResult Empty => new();
 }
