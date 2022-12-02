@@ -23,23 +23,24 @@ public class Solution : SolutionBase
         return totalScore.ToString();
     }
 
-    private static int GetRoundScore(string roundDef, bool guideExplained)
+    private static int GetRoundScore(string roundPicks, bool guideExplained)
     {
-        (char playerOne, char playerTwo) round = (roundDef[
-            0], roundDef[
-            2]);
+        var shoot = roundPicks.Split(" ");
+        (string playerOne, string playerTwo) round = (shoot[
+            0], shoot[
+            1]);
 
         return round switch
         {
-            ('A', 'X') => guideExplained ? 3 : 4,
-            ('A', 'Y') => guideExplained ? 4 : 8,
-            ('A', 'Z') => guideExplained ? 8 : 3,
-            ('B', 'X') => 1,
-            ('B', 'Y') => 5,
-            ('B', 'Z') => 9,
-            ('C', 'X') => guideExplained ? 2 : 7,
-            ('C', 'Y') => guideExplained ? 6 : 2,
-            ('C', 'Z') => guideExplained ? 7 : 6,
+            ("A", "X") => guideExplained ? 3 : 4,
+            ("A", "Y") => guideExplained ? 4 : 8,
+            ("A", "Z") => guideExplained ? 8 : 3,
+            ("B", "X") => 1,
+            ("B", "Y") => 5,
+            ("B", "Z") => 9,
+            ("C", "X") => guideExplained ? 2 : 7,
+            ("C", "Y") => guideExplained ? 6 : 2,
+            ("C", "Z") => guideExplained ? 7 : 6,
             _ => throw new NotImplementedException()
         };
     }
