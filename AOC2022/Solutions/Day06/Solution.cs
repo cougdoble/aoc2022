@@ -2,7 +2,7 @@ namespace AOC2022.Solutions.Day06;
 
 public class Solution : SolutionBase
 {
-    public Solution() : base(06, 2022, "")
+    public Solution() : base(06, 2022, "Tuning Trouble")
     {
     }
 
