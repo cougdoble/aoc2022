@@ -71,6 +71,10 @@ public abstract class SolutionBase
         var inputFilepath =
             $"./Solutions/Day{Day:D2}/{(debug ? "debug.txt" : "input.txt")}";
 
+        // use this path if attaching debugger
+        // var inputFilepath =
+        //     $"../../../Solutions/Day{Day:D2}/{(debug ? "debug.txt" : "input.txt")}";
+        
         if (File.Exists(inputFilepath) && new FileInfo(inputFilepath).Length > 0)
             return File.ReadAllText(inputFilepath);
         Console.WriteLine("file not found");
